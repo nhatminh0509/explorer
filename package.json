@@ -1,0 +1,40 @@
+{
+  "name": "explorer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -e .env.development node server.js -p $PORT",
+    "build": "next build",
+    "start": "NODE_ENV=production dotenv -e .env.development node server.js -p $PORT",
+    "start:production": "NODE_ENV=production dotenv -e .env.production node server.js -p $PORT"
+  },
+  "dependencies": {
+    "@metamask/onboarding": "^1.0.1",
+    "@reduxjs/toolkit": "^1.8.2",
+    "@walletconnect/client": "^1.7.8",
+    "@walletconnect/qrcode-modal": "^1.7.8",
+    "@walletconnect/utils": "^1.7.8",
+    "antd": "^4.20.7",
+    "bigdecimal": "^0.6.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "hex2dec": "^1.1.2",
+    "moment": "^2.29.3",
+    "next": "^12.1.6",
+    "next-routes": "^1.4.2",
+    "path": "^0.12.7",
+    "react": "^18.1.0",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "^18.1.0",
+    "react-redux": "^8.0.2",
+    "react-transition-group": "^4.4.2",
+    "redux": "^4.2.0",
+    "sass": "^1.52.1",
+    "web3": "^1.7.3"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^5.1.0",
+    "eslint": "8.16.0",
+    "eslint-config-next": "12.1.6"
+  }
+}

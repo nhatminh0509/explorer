@@ -1,0 +1,69 @@
+.t-table-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .t-header-table {
+    display: flex;
+    background:rgba(42, 42, 66, 0.3);
+    .t-title{
+      color: white;
+      padding-left: 7px;
+      padding-right: 7px;
+      &:first-child {
+        padding-left: 29px;
+        padding-right: 7px;
+      } 
+      &:last-child {
+        padding-left: 7px;
+        padding-right: 29px;
+      }
+    }
+  }
+  .t-body-table {
+    overflow: scroll;
+    display: flex;
+  }
+  .t-items {
+    color: #ffffff96;
+    &.highlight {
+      background-color: rgba(42, 42, 66, 0.063);
+    }
+    .t-item-column{
+      overflow: hidden;
+      // overflow: scroll;
+      padding-left: 7px;
+      padding-right: 7px;
+      &:first-child {
+        padding-left: 31px;
+        padding-right: 7px;
+      } 
+      &:last-child {
+        padding-left: 7px;
+        padding-right: 31px;
+      }
+    }
+  }
+  .t-new-items {
+    animation: 1s ease-out 0s 1 normal forwards running addNewItem;
+  }
+}
+
+@keyframes addNewItem {
+  0% {
+    background-color: rgba(114, 104, 180, 0.3);
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  70% {
+    transform: translateY(8%);
+  }
+  67% {
+    transform: translateY(-4%);
+  }
+  100% {
+    background-color: rgba(42, 42, 66, 0.063);
+    opacity: 1;
+    transform: translateY(0%);
+  }  
+}
