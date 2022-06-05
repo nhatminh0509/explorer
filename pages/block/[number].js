@@ -52,7 +52,7 @@ const BlockDetail = ({ number }) => {
               <InfoBlock title='Gas Limit' content={`${numberWithCommas(block?.gasLimit || 0)}`} />
               <InfoBlock title='Base Fee Per Gas' highlight content={`${numberWithCommas(block?.baseFeePerGas || 0)}`} />
               <InfoBlock title='Hash' content={`${block?.hash}`} />
-              <InfoBlock title='Parent Hash' highlight content={() => <Link href={`/tx/${block?.parentHash}`}>{block?.parentHash}</Link>} />
+              <InfoBlock title='Parent Hash' highlight content={() => <Link href={`/block/${block?.parentHash}`}>{block?.parentHash}</Link>} />
               <InfoBlock title='State Root' content={`${block?.stateRoot}`} />
             </>}
           </BlockContainer>
