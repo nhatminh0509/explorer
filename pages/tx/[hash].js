@@ -51,7 +51,8 @@ const TransactionDetail = ({ hash }) => {
             header={{
               left: () => "Transaction Detail",
             }}
-            tabs={["Detail", "Logs"]}
+            tabs={transactionReceipt && transactionReceipt?.logs?.length > 0 ? ["Detail", "Logs"] : ["Detail"]}
+            className='MT30 MB30'
             contents={[() => <DetailTransaction loading={loading} transaction={transaction} transactionReceipt={transactionReceipt} block={block} />]}
           />
         </Col>
@@ -81,6 +82,11 @@ const DetailTransaction = ({ loading, transaction, transactionReceipt, block }) 
           <InfoBlock highlight title="Transaction Fees" content={`${numberWithCommas(convertWeiToBalance(transaction?.gasPrice))} ${NATIVE_COIN}`} />
           <InfoBlock title='Max Fee Per Gas' content={`${numberWithCommas(convertWeiToBalance(transaction?.maxFeePerGas))} ${NATIVE_COIN}`} />
           <InfoBlock highlight title="Max Priority Fee Per Gas" content={`${numberWithCommas(convertWeiToBalance(transaction?.maxPriorityFeePerGas))} ${NATIVE_COIN}`} />
+          <InfoBlock title='Transaction Savings' content={`---`} />
+          <InfoBlock highlight title="Gas Price" content={`${numberWithCommas(convertWeiToBalance(transaction?.maxPriorityFeePerGas))} ${NATIVE_COIN}`} />
+          <InfoBlock title='Transaction Types' content={`---`} />
+          <InfoBlock highlight title="Nonce ( Position )" content={`${transaction?.nonce}`} />
+          <InfoBlock title='Input Data' content={`${transaction?.input}`} />
         </>
       )}
     </>
