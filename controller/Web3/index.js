@@ -22,12 +22,12 @@ export default class Web3Services {
   }
 
   static createWeb3ProviderHTTP () {
-    let web3 = new Web3(new Web3.providers.HttpProvider('http://95.179.192.46:9650/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'))
+    let web3 = new Web3(new Web3.providers.HttpProvider('https://95.179.192.46:9650/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'))
     return web3
   }
 
   static createWeb3ProviderSocket () {
-    let web3 = new Web3(new Web3.providers.WebsocketProvider('ws://107.191.42.165:9652/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/ws'))
+    let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://107.191.42.165:9652/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/ws'))
     return web3
   }
 
