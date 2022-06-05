@@ -6,15 +6,19 @@ import Table from "Components/Table"
 import moment from "moment"
 import { convertWeiToBalance, ellipsisAddress, roundingNumber } from "common/function"
 import { NATIVE_COIN } from "common/constants"
-import Link from "next/link"
 import { Button } from "antd"
 import PrimaryButton from "Components/PrimaryButton"
+import { useDispatch } from "react-redux"
+import { setLastestBlock } from "controller/Redux/slice/appSlice"
+import Link from "Components/Link"
+
 const PER_PAGE = 20
 const Blocks = () => {
   const [blocks, setBlocks] = useState([])
-  const [lastestBlock, setLastestBlock] = useState(null)
+  const [startBlock, setStartBlock] = useState(null)
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
   // useEffect(() => {
   //   if (blocks.length > PER_PAGE) {
   //     setBlocks(state => [...state.slice(0, PER_PAGE)])
@@ -25,45 +29,63 @@ const Blocks = () => {
     const subscribe = async () => {
       const web3 = Web3Services.createWeb3ProviderSocket()
       web3.eth.subscribe('newBlockHeaders').on('data', async data => {
-        const block = await web3.eth.getBlock(data.number)
-        setBlocks(state => {
-          const existed = state.findIndex(item => item.number === data.number)
-          if (existed > -1) {
-            return [...state]
+        if (data) {
+          const block = await web3.eth.getBlock(data.number)
+          if (block && block.number) {
+            dispatch(setLastestBlock(block))
+            setBlocks(state => {
+              const existed = state.findIndex(item => item.number === data.number)
+              if (existed > -1) {
+                return [...state]
+              }
+              return [block, ...state]
+            })
           }
-          return [block, ...state]
-        })
+        }
       })
     }
 
     subscribe()
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     const getLastestBlock = async () => {
       const web3 = Web3Services.createWeb3ProviderHTTP()
       const lastesBlock = await web3.eth.getBlockNumber()
-      setLastestBlock(lastesBlock)
+      if (lastesBlock) {
+        const block = await web3.eth.getBlock(lastesBlock)
+        if (block) {
+          setStartBlock(block)
+        }
+      }
     }
     getLastestBlock()
   }, [])
+
+  useEffect(() => {
+    if (blocks.length === 0) {
+      dispatch(setLastestBlock(startBlock))
+    }
+  }, [startBlock, blocks, dispatch])
 
   const getBlocks = useCallback(async (page) => {
     setLoading(true)
     const web3 = Web3Services.createWeb3ProviderHTTP()
     for (let i = 0; i < PER_PAGE; i++) {
-      const block = await web3.eth.getBlock(lastestBlock - (PER_PAGE * page) - i)
-      setBlocks(state => [...state, block])
+      const block = await web3.eth.getBlock(startBlock?.number - (PER_PAGE * page) - i)
+      if (block && block.number) {
+        setBlocks(state => [...state, block])
+      }
     }
     setLoading(false)
     setPage(page => page + 1)
-  }, [lastestBlock])
+  }, [startBlock])
 
   useEffect(() => {
-    if (lastestBlock && !loading && blocks.length < PER_PAGE) {
+    if (startBlock && !loading && blocks.length < PER_PAGE) {
       getBlocks(page)
     }
-  }, [lastestBlock, getBlocks, loading, page, blocks])
+  }, [startBlock, getBlocks, loading, page, blocks])
 
   return (
     <BlockContainer header={{
@@ -72,7 +94,8 @@ const Blocks = () => {
         <Table columns={[{
             column: 5,
             dataField: 'number',
-            name: 'Blocks'
+            name: 'Blocks',
+            render: (item) => <Link href={`/block/${item?.number}`}>{item?.number}</Link>
           },
           {
             column: 5,

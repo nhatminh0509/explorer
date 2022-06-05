@@ -11,7 +11,7 @@ const Home = () => {
         <Transactions />
       </Col>
       <Col className='MT20' md={24} lg={12}>
-        {/* <Blocks /> */}
+        <Blocks />
       </Col>
     </Row>
   </div>)

@@ -23,6 +23,12 @@
   .t-body-table {
     overflow: scroll;
     display: flex;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
   }
   .t-items {
     color: #ffffff96;

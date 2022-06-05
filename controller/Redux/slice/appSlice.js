@@ -51,6 +51,6 @@ export const appSlice = createSlice({
   },
 })
 
-export const { setWalletConnect, setBalance, setMetamask, setUserData, setConnectionMethod } = appSlice.actions
+export const { setWalletConnect, setBalance, setMetamask, setUserData, setConnectionMethod, setLastestBlock } = appSlice.actions
 
 export default appSlice.reducer

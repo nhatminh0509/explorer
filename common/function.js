@@ -62,6 +62,12 @@ export const randomNumber = (min, max) => {
   return Math.floor(Math.random() * max) + min;
 }
 
+export const numberWithCommas = (x) => {
+  var parts = x.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
+}
+
 export const convertBalanceToWei = (strValue, iDecimal = 18) => {
   var multiplyNum = new bigdecimal.BigDecimal(Math.pow(10, iDecimal))
   var convertValue = new bigdecimal.BigDecimal(String(strValue))

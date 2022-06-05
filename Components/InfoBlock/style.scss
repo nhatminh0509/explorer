@@ -1,0 +1,16 @@
+.t-info-block-container{ 
+  padding: 10px 20px;
+  .t-info-column {
+    color: #ffffff96;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
+  }
+  &.highlight {
+    background-color: rgba(42, 42, 66, 0.063);
+  }
+}

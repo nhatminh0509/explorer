@@ -6,15 +6,24 @@ import Table from "Components/Table";
 import Transaction from "../Transaction";
 import { Button } from "antd";
 import PrimaryButton from "Components/PrimaryButton";
+import { useSelector } from "react-redux";
 
 const PER_PAGE = 20
 const Transactions = () => {
+  const [currentBlock, setCurrentBlock] = useState(null)
   const [blockStart, setBlockStart] = useState(0)
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(0)
   const perPageCount = useRef(0)
+  const lastestBlock = useSelector(state => state?.app?.lastestBlock)
 
+  useEffect(() => {
+    if (lastestBlock && lastestBlock.number && lastestBlock.transactions && (!currentBlock || lastestBlock.number > currentBlock.number)) {
+      setCurrentBlock(lastestBlock)
+      setTransactions(state => [...lastestBlock.transactions, ...state])
+    }
+  }, [lastestBlock, currentBlock])
   // useEffect(() => {
   //   if (transactions.length > PER_PAGE) {
   //     setTransactions(state => [...state.slice(0, PER_PAGE)])

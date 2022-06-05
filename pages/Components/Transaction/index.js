@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd'
 import { NATIVE_COIN } from 'common/constants'
 import { convertWeiToBalance, ellipsisAddress, roundingNumber } from 'common/function'
+import Loading from 'Components/Loading'
 import Web3Services from 'controller/Web3'
 import moment from 'moment'
 import Link from 'next/link'
@@ -39,10 +40,10 @@ const Transaction = ({ hash = '', index }) => {
   return (
     <>
       <Col span={5} className='t-item-column'><Link href={`/tx/${hash}`}>{ellipsisAddress(hash, 4, 4)}</Link></Col>
-      <Col span={4} className='t-item-column'>{loading ? 'Loading...' : <Link href={`/tx/${hash}`}>{ellipsisAddress(transaction?.from || '', 4, 4)}</Link>}</Col>
-      <Col span={4} className='t-item-column'>{loading ? 'Loading...' : <Link href={`/tx/${hash}`}>{ellipsisAddress(transaction?.to || '', 4, 4)}</Link>}</Col>
-      <Col span={6} className='t-item-column'>{loading || !block ? (transaction?.blockNumber ? 'Loading...' : 'Pending') : moment.unix(block.timestamp).fromNow()}</Col>
-      <Col span={5} className='t-item-column'>{loading ? 'Loading...' : roundingNumber(convertWeiToBalance(transaction?.value || '0'), 6)} {NATIVE_COIN}</Col>
+      <Col span={4} className='t-item-column'>{loading ? '...' : <Link href={`/address/${transaction?.from}`}>{ellipsisAddress(transaction?.from || '', 4, 4)}</Link>}</Col>
+      <Col span={4} className='t-item-column'>{loading ? '...' : <Link href={`/address/${transaction?.to}`}>{ellipsisAddress(transaction?.to || '', 4, 4)}</Link>}</Col>
+      <Col span={6} className='t-item-column'>{loading || !block ? '...' : moment.unix(block?.timestamp).fromNow()}</Col>
+      <Col span={5} className='t-item-column'>{loading ? '...' : roundingNumber(convertWeiToBalance(transaction?.value || '0'), 6)} {NATIVE_COIN}</Col>
     </>
   )
 }
