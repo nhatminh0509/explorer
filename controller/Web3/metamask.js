@@ -1,7 +1,7 @@
 import ReduxService from "../Redux/redux";
 import MetaMaskOnboarding from '@metamask/onboarding'
 import { isMobile } from 'react-device-detect'
-import { CHAIN_DATA, OBSERVER_KEY } from "../../common/constants";
+import { CHAIN_DATA, CHAIN_ID, OBSERVER_KEY } from "../../common/constants";
 import { destroyNotification, showNotification } from "../../common/function";
 import { convertUtf8ToHex } from '@walletconnect/utils'
 import Observer from "../../common/observer";
@@ -66,7 +66,7 @@ export default class MetamaskServices {
       const chainId = await window.ethereum.request({
         method: 'eth_chainId'
       })
-      let acceptChainData = CHAIN_DATA[parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)]
+      let acceptChainData = CHAIN_DATA[parseInt(CHAIN_ID)]
       if (chainId === acceptChainData.chainId) {
         this.handleNewChain(chainId)
       } else {
@@ -74,7 +74,7 @@ export default class MetamaskServices {
         showNotification(
           `Wrong network! Please switch chain to ${acceptChainData.chainName}`
         )
-        await this.addNewChain(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)
+        await this.addNewChain(CHAIN_ID)
         // Reload page
         window.location.reload()
       }
@@ -89,7 +89,7 @@ export default class MetamaskServices {
   }
 
   static handleNewChain (chainId) {
-    let acceptChainData = CHAIN_DATA[parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)]
+    let acceptChainData = CHAIN_DATA[parseInt(CHAIN_ID)]
     if (chainId === acceptChainData.chainId) {
       ReduxService.updateMetamask({
         chainId

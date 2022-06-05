@@ -8,8 +8,7 @@ const columnDefault = [{
   render: null
 }]
 
-const Table = ({ columns = columnDefault, datasource = [], maxHeight = '100%', indexKey = 'number', renderItem }) => {
-
+const Table = ({ columns = columnDefault, datasource = [], maxHeight = '100%', indexKey = '', renderItem, loadMoreButton }) => {
   return (
     <div className='t-table-container' style={{ maxHeight }}>
       <Row className='t-header-table'>
@@ -22,9 +21,10 @@ const Table = ({ columns = columnDefault, datasource = [], maxHeight = '100%', i
       <Row className='t-body-table'>
         {
           datasource.map((item, index) => (
-            renderItem ? renderItem(item, index) : <DataItem item={item} key={item[indexKey]} index={index} columns={columns}/>
+            renderItem ? <Row key={index} style={{ width: '100%' }} className={index === 0 ? 't-items t-new-items' : (index % 2 === 0 ? 't-items highlight' : 't-items')}>{renderItem(item, index)}</Row> : <DataItem item={item} key={item[indexKey]} index={index} columns={columns}/>
           ))
         }
+        {loadMoreButton && <Row style={{width: '100%', display: 'flex', justifyContent: 'center', padding: '0 24px' }}  className='t-items'>{loadMoreButton()}</Row>}
       </Row>
     </div>
   )

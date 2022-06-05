@@ -1,29 +1,31 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import './style.scss'
 import Web3Services from "controller/Web3"
 import BlockContainer from "Components/BlockContainer"
 import Table from "Components/Table"
 import moment from "moment"
 import { convertWeiToBalance, ellipsisAddress, roundingNumber } from "common/function"
-import Link from "Components/Link"
 import { NATIVE_COIN } from "common/constants"
-const PER_PAGE = 50
+import Link from "next/link"
+import { Button } from "antd"
+import PrimaryButton from "Components/PrimaryButton"
+const PER_PAGE = 20
 const Blocks = () => {
   const [blocks, setBlocks] = useState([])
-  const [currentBlock, setCurrentBlock] = useState({})
-
-  useEffect(() => {
-    if (blocks.length > PER_PAGE) {
-      setBlocks(state => [...state.slice(0, PER_PAGE)])
-    }
-  }, [blocks])
+  const [lastestBlock, setLastestBlock] = useState(null)
+  const [page, setPage] = useState(0)
+  const [loading, setLoading] = useState(false)
+  // useEffect(() => {
+  //   if (blocks.length > PER_PAGE) {
+  //     setBlocks(state => [...state.slice(0, PER_PAGE)])
+  //   }
+  // }, [blocks])
 
   useEffect(() => {
     const subscribe = async () => {
       const web3 = Web3Services.createWeb3ProviderSocket()
       web3.eth.subscribe('newBlockHeaders').on('data', async data => {
         const block = await web3.eth.getBlock(data.number)
-        setCurrentBlock(block)
         setBlocks(state => {
           const existed = state.findIndex(item => item.number === data.number)
           if (existed > -1) {
@@ -38,17 +40,30 @@ const Blocks = () => {
   }, [])
 
   useEffect(() => {
-    const getBlocks = async () => {
+    const getLastestBlock = async () => {
       const web3 = Web3Services.createWeb3ProviderHTTP()
       const lastesBlock = await web3.eth.getBlockNumber()
-      const result = []
-      for (let i = 0; i < PER_PAGE; i++) {
-        const block = await web3.eth.getBlock(lastesBlock - i)
-        setBlocks(state => [...state, block])
-      }
+      setLastestBlock(lastesBlock)
     }
-    getBlocks()
+    getLastestBlock()
   }, [])
+
+  const getBlocks = useCallback(async (page) => {
+    setLoading(true)
+    const web3 = Web3Services.createWeb3ProviderHTTP()
+    for (let i = 0; i < PER_PAGE; i++) {
+      const block = await web3.eth.getBlock(lastestBlock - (PER_PAGE * page) - i)
+      setBlocks(state => [...state, block])
+    }
+    setLoading(false)
+    setPage(page => page + 1)
+  }, [lastestBlock])
+
+  useEffect(() => {
+    if (lastestBlock && !loading && blocks.length < PER_PAGE) {
+      getBlocks(page)
+    }
+  }, [lastestBlock, getBlocks, loading, page, blocks])
 
   return (
     <BlockContainer header={{
@@ -83,6 +98,7 @@ const Blocks = () => {
           datasource={blocks} 
           maxHeight='370px' 
           indexKey="number"
+          loadMoreButton={() => <PrimaryButton loading={loading} onClick={() => getBlocks(page)}>Load more</PrimaryButton>}
         />
         {/* {
           blocks.map(item => (

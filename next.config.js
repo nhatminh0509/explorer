@@ -1,7 +1,7 @@
 const path = require('path')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   concurrentFeatures: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],

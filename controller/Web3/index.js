@@ -1,5 +1,5 @@
 import Web3 from 'web3'
-import { CHAIN_DATA, CONNECTION_METHOD } from '../../common/constants'
+import { CHAIN_DATA, CHAIN_ID, CONNECTION_METHOD } from '../../common/constants'
 import { convertWeiToBalance, randomNumber, roundingNumber } from '../../common/function'
 import ReduxService from '../Redux/redux'
 import converter from 'hex2dec'
@@ -16,18 +16,18 @@ export default class Web3Services {
     } else if (connectionMethod === CONNECTION_METHOD.WALLET_CONNECT && walletConnect && walletConnect.chainId !== 0) {
       web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA?.[walletConnect.chainId]?.rpcUrls[randomNumber(0, CHAIN_DATA?.[walletConnect.chainId]?.rpcUrls?.length)]))
     } else {
-      web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA?.[parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)]?.rpcUrls[randomNumber(0, CHAIN_DATA?.[parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)]?.rpcUrls?.length)]))
+      web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA?.[CHAIN_ID]?.rpcUrls[randomNumber(0, CHAIN_DATA?.[parseInt(CHAIN_ID)]?.rpcUrls?.length)]))
     }
     return web3
   }
 
   static createWeb3ProviderHTTP () {
-    let web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/0f544d5faaa240ae920e054cc08bcc2a'))
+    let web3 = new Web3(new Web3.providers.HttpProvider('https://goerli.infura.io/v3/0f544d5faaa240ae920e054cc08bcc2a'))
     return web3
   }
 
   static createWeb3ProviderSocket () {
-    let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/7230074cb3a9430a9122ec3ee41e7551'))
+    let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://goerli.infura.io/ws/v3/0f544d5faaa240ae920e054cc08bcc2a'))
     return web3
   }
 
@@ -342,8 +342,9 @@ export default class Web3Services {
       receipt.blockNumber === null ||
       receipt.blockNumber === undefined
     ) {
-      let web3 = new Web3()
-      web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA[parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)].rpcUrls[randomNumber(0, CHAIN_DATA[parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)].rpcUrls.length)]))
+      // let web3 = new Web3()
+      // web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA[parseInt(CHAIN_ID)].rpcUrls[randomNumber(0, CHAIN_DATA[parseInt(CHAIN_ID)].rpcUrls.length)]))
+      let web3 = this.createWeb3ProviderHTTP()
       web3.eth.getTransactionReceipt(hash, (err, result) => {
         if (!err) {
           setTimeout(() => {

@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e .env.development node server.js -p $PORT",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production dotenv -e .env.development node server.js -p $PORT",
-    "start:production": "NODE_ENV=production dotenv -e .env.production node server.js -p $PORT"
+    "start": "next start"
   },
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",

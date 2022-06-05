@@ -2,7 +2,7 @@ import ReduxService from "../Redux/redux"
 import WalletConnect from "@walletconnect/client"
 import WalletConnectQRCodeModal from '@walletconnect/qrcode-modal'
 import { checkHuaweiDevice, getDataLocal, getWalletConnectHuaweiLink, removeDataLocal, saveDataLocal } from "../../common/function"
-import { OBSERVER_KEY, WALLET_CONNECT_APP } from "../../common/constants"
+import { CHAIN_ID, OBSERVER_KEY, WALLET_CONNECT_APP } from "../../common/constants"
 import Observer from "../../common/observer"
 import { convertUtf8ToHex } from "@walletconnect/utils"
 
@@ -41,7 +41,7 @@ export default class WalletConnectServices {
       ReduxService.updateWalletConnect({ connector })
 
       if (!connector.connected) {
-        await connector.createSession({ chainId: parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED) })
+        await connector.createSession({ chainId: parseInt(CHAIN_ID) })
       } else {
         const { accounts, chainId, peerMeta } = connector
         this.onConnect(connector, accounts, chainId, peerMeta)

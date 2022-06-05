@@ -727,5 +727,5 @@ export const WALLET_CONNECT_APP = [{
   'deepLink': 'wattwallet://wallet-connect/'
 }]
 
-
-export const NATIVE_COIN = process.env.NEXT_PUBLIC_NATIVE_COIN
+export const CHAIN_ID = 97
+export const NATIVE_COIN = 'WPT'

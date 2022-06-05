@@ -1,0 +1,21 @@
+.t-button-container{
+  width: 100%;
+  margin-top: 20px;
+  min-height: 30px;
+  border-radius: 15px;
+  background-color: rgba(21, 61, 111, 0.44);
+  color: rgb(80, 144, 234);
+  border: none;
+  &:hover{
+    background-color: rgba(19, 54, 98, 0.44);
+  }
+  &:disabled {
+    background-color: rgba(19, 54, 98, 0.44);
+  }
+  &:focus{
+    background-color: rgba(19, 54, 98, 0.44);
+  }
+}
+.ant-btn::before{
+  background-color: transparent !important;
+}

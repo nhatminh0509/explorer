@@ -21,6 +21,7 @@ const initialState = {
   },
   userData: null,
   connectionMethod: null,
+  lastestBlock: null
 }
 
 export const appSlice = createSlice({
@@ -43,6 +44,9 @@ export const appSlice = createSlice({
     setConnectionMethod: (state, action) => {
       saveDataLocal(KEY_STORE.SET_CONNECTION_METHOD, action.payload)
       state.connectionMethod = action.payload
+    },
+    setLastestBlock: (state, action) => {
+      state.lastestBlock = action.payload
     }
   },
 })

@@ -1,48 +1,59 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import Web3Services from "controller/Web3";
 import BlockContainer from "Components/BlockContainer";
 import Table from "Components/Table";
 import Transaction from "../Transaction";
+import { Button } from "antd";
+import PrimaryButton from "Components/PrimaryButton";
 
-const PER_PAGE = 50
+const PER_PAGE = 20
 const Transactions = () => {
   const [blockStart, setBlockStart] = useState(0)
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(0)
+  const perPageCount = useRef(0)
 
+  // useEffect(() => {
+  //   if (transactions.length > PER_PAGE) {
+  //     setTransactions(state => [...state.slice(0, PER_PAGE)])
+  //   }
+  // }, [transactions])
 
-  useEffect(() => {
-    if (transactions.length > PER_PAGE) {
-      setTransactions(state => [...state.slice(0, PER_PAGE)])
-    }
-  }, [transactions])
+  // useEffect(() => {
+  //   const subscribe = async () => {
+  //     const web3 = Web3Services.createWeb3ProviderSocket()
+  //     web3.eth.subscribe("pendingTransactions").on("data", async (data) => {
+  //       setTransactions(state => {
+  //         const existed = state.findIndex(item => item?.toLowerCase() === data?.toLowerCase())
+  //         if (existed > -1) {
+  //           return [...state]
+  //         }
+  //         return [data, ...state]
+  //       })
+  //     })
+  //   }
 
-  useEffect(() => {
-    const subscribe = async () => {
-      const web3 = Web3Services.createWeb3ProviderSocket()
-      web3.eth.subscribe("pendingTransactions").on("data", async (data) => {
-        console.log(data)
-        setTransactions(state => {
-          const existed = state.findIndex(item => item?.toLowerCase() === data?.toLowerCase())
-          if (existed > -1) {
-            return [...state]
-          }
-          return [data, ...state]
-        })
-      })
-    }
-
-    subscribe()
-  }, [])
+  //   subscribe()
+  // }, [])
 
   const getTransactions = useCallback(async (page) => {
     setLoading(true)
     const web3 = Web3Services.createWeb3ProviderHTTP()
     const block = await web3.eth.getBlock(blockStart - page)
-    setTransactions(state => [...state, ...block?.transactions])
-    setPage(state => state + 1)
+    if (block && block.transactions) {
+      if (perPageCount.current === -1) {
+        perPageCount.current = block.transactions.length
+      } else {
+        perPageCount.current += block.transactions.length
+      }
+      setTransactions(state => [...state, ...block.transactions])
+      setPage(state => state + 1)
+      if (perPageCount.current >= PER_PAGE) {
+        perPageCount.current = -1
+      }
+    }
     setLoading(false)
   }, [blockStart])
 
@@ -57,7 +68,7 @@ const Transactions = () => {
   }, [])
 
   useEffect(() => {
-    if (blockStart > 0 && transactions.length < PER_PAGE && !loading) {
+    if (blockStart > 0 && perPageCount.current !== -1 && perPageCount.current < PER_PAGE && !loading) {
       getTransactions(page)
     }
   }, [page, transactions, getTransactions, blockStart, loading])
@@ -102,7 +113,9 @@ const Transactions = () => {
         renderItem={(item, index) => (
           <Transaction key={item} hash={item} index={index} />
         )}
+        indexKey='hash'
         maxHeight="370px"
+        loadMoreButton={() => <PrimaryButton loading={loading} onClick={() => getTransactions(page)} >Load more</PrimaryButton>}
       />
     </BlockContainer>
   );

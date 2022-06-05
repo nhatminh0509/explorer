@@ -1,4 +1,4 @@
-import { CONNECTION_METHOD } from '../../common/constants'
+import { CHAIN_ID, CONNECTION_METHOD } from '../../common/constants'
 import { lowerCase, showNotification } from '../../common/function'
 import Web3Services from '../Web3'
 import MetamaskServices from '../Web3/metamask'
@@ -70,7 +70,7 @@ export default class ReduxService {
           return resolve(null)
         }
 
-        const findNetwork = parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)
+        const findNetwork = parseInt(CHAIN_ID)
         let network = findNetwork || 0
         if (parseInt(metamask.network) !== network) {
           showNotification('onlySupportNetwork TODO')
@@ -185,7 +185,7 @@ export default class ReduxService {
           return resolve(null)
         }
 
-        const findNetwork = parseInt(process.env.NEXT_PUBLIC_WEB3_NETWORK_ID_ALLOWED)
+        const findNetwork = parseInt(CHAIN_ID)
 
         let netword = findNetwork || 0
 
