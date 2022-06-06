@@ -1,10 +1,14 @@
 import { Layout } from "antd"
+import Header from "./Header"
 import './style.scss'
 
 const Container = (props) => {
   return (
     <Layout className='layout-container'>
-      {props.children}
+      <Header />
+      <div className="base-container">
+        {props.children}
+      </div>
     </Layout>
   )
 }

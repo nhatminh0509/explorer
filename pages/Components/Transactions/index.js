@@ -7,8 +7,10 @@ import Transaction from "../Transaction";
 import { Button } from "antd";
 import PrimaryButton from "Components/PrimaryButton";
 import { useSelector } from "react-redux";
+import { uniq } from "lodash";
 
 const PER_PAGE = 20
+const LIMIT = 100
 const Transactions = () => {
   const [currentBlock, setCurrentBlock] = useState(null)
   const [blockStart, setBlockStart] = useState(0)
@@ -21,14 +23,18 @@ const Transactions = () => {
   useEffect(() => {
     if (lastestBlock && lastestBlock.number && lastestBlock.transactions && (!currentBlock || lastestBlock.number > currentBlock.number)) {
       setCurrentBlock(lastestBlock)
-      setTransactions(state => [...lastestBlock.transactions, ...state])
+      setTransactions(state => {
+        const newState = uniq([...lastestBlock.transactions, ...state])
+        return newState
+      })
     }
   }, [lastestBlock, currentBlock])
-  // useEffect(() => {
-  //   if (transactions.length > PER_PAGE) {
-  //     setTransactions(state => [...state.slice(0, PER_PAGE)])
-  //   }
-  // }, [transactions])
+  
+  useEffect(() => {
+    if (transactions.length > LIMIT + (page * PER_PAGE)) {
+      setTransactions(state => [...state.slice(0, LIMIT)])
+    }
+  }, [transactions, page])
 
   // useEffect(() => {
   //   const subscribe = async () => {
@@ -112,6 +118,7 @@ const Transactions = () => {
 
   return (
     <BlockContainer
+      className="H450"
       header={{
         left: () => "Latest Transactions",
       }}

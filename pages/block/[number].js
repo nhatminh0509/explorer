@@ -44,7 +44,7 @@ const BlockDetail = ({ number }) => {
               <InfoBlock title='Block Height' content={`${block?.number}`} />
               <InfoBlock title='Timestamp' highlight content={`${moment.unix(block?.timestamp).fromNow()} (${moment.unix(block?.timestamp).format('MMM DD, YYYY HH:mm:ss')})`} />
               <InfoBlock title='Transaction' content={`${block?.transactions?.length}`} />
-              <InfoBlock title='Fees' highlight content={``} />
+              <InfoBlock title='Fees' highlight content={`---`} />
               <InfoBlock title='Difficulty' content={`${block?.difficulty}`} />
               <InfoBlock title='Total Difficulty' highlight content={`${block?.totalDifficulty}`} />
               <InfoBlock title='Size' content={`${block?.size}`} />

@@ -5,6 +5,7 @@ import BlockContainer from "Components/BlockContainer";
 import InfoBlock from "Components/InfoBlock";
 import Link from "Components/Link";
 import Loading from "Components/Loading";
+import LogInfo from "Components/LogInfo";
 import Web3Services from "controller/Web3";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -51,15 +52,19 @@ const TransactionDetail = ({ hash }) => {
             header={{
               left: () => "Transaction Detail",
             }}
-            tabs={transactionReceipt && transactionReceipt?.logs?.length > 0 ? ["Detail", "Logs"] : ["Detail"]}
+            tabs={transactionReceipt && transactionReceipt?.logs?.length > 0 ? ["Detail", "Info", "Logs"] : ["Detail", "Info"]}
             className='MT30 MB30'
-            contents={[() => <DetailTransaction loading={loading} transaction={transaction} transactionReceipt={transactionReceipt} block={block} />]}
+            contents={[
+              () => <DetailTransaction loading={loading} transaction={transaction} transactionReceipt={transactionReceipt} block={block} />,
+              () => <TransactionInfo loading={loading} transaction={transaction} />,
+              () => <TransactionLog loading={loading} transactionReceipt={transactionReceipt} />
+            ]}
           />
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
 const DetailTransaction = ({ loading, transaction, transactionReceipt, block }) => {
   return (
@@ -90,13 +95,30 @@ const DetailTransaction = ({ loading, transaction, transactionReceipt, block }) 
         </>
       )}
     </>
-  );
-};
+  )
+}
+
+const TransactionInfo = ({ transaction, loading }) => {
+  return (<>
+    {loading ? <Loading /> :<>
+    <InfoBlock title="From" content={() => <Link href={`/address/${transaction?.from}`}>{transaction?.from}</Link>} />
+    <InfoBlock highlight title="To" content={() => <Link href={`/address/${transaction?.to}`}>{transaction?.to}</Link>} />
+    </>}
+  </>)
+}
+
+const TransactionLog = ({ loading, transactionReceipt }) => {
+  return (<>
+    {loading ? <Loading />  : <>
+      {transactionReceipt?.logs && transactionReceipt?.logs?.map((log, index) => <LogInfo key={index} index={index} log={log} />)}
+    </>}
+  </>)
+}
 
 export const getServerSideProps = async ({ query }) => {
   return {
-    props: { hash: query.hash },
-  };
-};
+    props: { hash: query.hash }
+  }
+}
 
-export default TransactionDetail;
+export default TransactionDetail

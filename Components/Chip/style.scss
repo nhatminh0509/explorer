@@ -1,0 +1,16 @@
+.t-chip-container{
+  border-radius: 16px;
+  padding: 5px 15px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.light {
+    background-color: #fff;
+    color: #333;
+  }
+  &.dark {
+    background-color: #333;
+    color: #fff;
+  }
+}

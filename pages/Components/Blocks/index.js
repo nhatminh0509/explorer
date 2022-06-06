@@ -13,17 +13,18 @@ import { setLastestBlock } from "controller/Redux/slice/appSlice"
 import Link from "Components/Link"
 
 const PER_PAGE = 20
+const LIMIT = 100
 const Blocks = () => {
   const [blocks, setBlocks] = useState([])
   const [startBlock, setStartBlock] = useState(null)
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
-  // useEffect(() => {
-  //   if (blocks.length > PER_PAGE) {
-  //     setBlocks(state => [...state.slice(0, PER_PAGE)])
-  //   }
-  // }, [blocks])
+  useEffect(() => {
+    if (blocks.length > LIMIT + (page * PER_PAGE)) {
+      setBlocks(state => [...state.slice(0, LIMIT)])
+    }
+  }, [blocks, page])
 
   useEffect(() => {
     const subscribe = async () => {
@@ -88,7 +89,7 @@ const Blocks = () => {
   }, [startBlock, getBlocks, loading, page, blocks])
 
   return (
-    <BlockContainer header={{
+    <BlockContainer className="H450" header={{
       left: () => 'Latest Blocks'
     }}>
         <Table columns={[{

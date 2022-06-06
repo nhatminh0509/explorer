@@ -6,6 +6,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  images: {
+    domains: ['testnet.metheus.network'],
+  },
   experimental: {
     reactRoot: true,
   },

@@ -20,6 +20,17 @@ export const CHAIN_DATA = {
       decimals: 18
     },
     blockExplorerUrls: ['https://testnet.bscscan.com']
+  },
+  24052022: {
+    rpcUrls: ['https://rpc-test.w3w.app/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'],
+    chainId: '0x16f0136',
+    chainName: 'WrapTag',
+    nativeCurrency: {
+      name: 'WPT',
+      symbol: 'WPT',
+      decimals: 18
+    },
+    blockExplorerUrls: ['https://testnet.metheus.network']
   }
 }
 

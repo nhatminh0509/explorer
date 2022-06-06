@@ -1,0 +1,17 @@
+.t-search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .ant-input-affix-wrapper{
+    width: 500px;
+    background-color: transparent;
+    .ant-input-prefix {
+      background-color: transparent;
+    }
+    .ant-input {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.5882352941);
+    }
+  }
+}

@@ -1,6 +1,47 @@
 .home-container {
+  min-height: 100%;
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .top-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 480px;
+      .title-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .title{
+        font-size: 32px;
+        color: #fff;
+        text-align: center;
+      }
+      .sub-title {
+        width: 120px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5882352941);
+      }
+    }
+  }
+  .total {
+    padding: 10px 24px 0px 24px;
+    font-size: 32px;
+    color: #fff;
+  }
+  .chain-info-tx {
+    padding: 10px 24px 0px 24px;
+    color: #fff;
+  }
 }

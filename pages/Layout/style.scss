@@ -4,4 +4,9 @@
   display: flex;
   flex-direction: column;
   background: radial-gradient(150% 100% at 50% 0%, rgb(10, 41, 75) 0%, rgb(34, 30, 48) 50%, rgb(31, 33, 40) 100%);
+  font-family: 'Roboto', sans-serif;
+  .base-container {
+    min-height: calc(100vh - 60px);
+    display: flex;
+  }
 }
