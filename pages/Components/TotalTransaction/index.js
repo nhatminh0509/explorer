@@ -14,8 +14,9 @@ const TotalTransaction = () => {
       let total = 0
       let avg = 0
       if (lastestBlock?.number > 200) {
-        for (let i = 0; i < 10; i++) {
-          const block = await web3.eth.getBlock(lastestBlock?.number - 10)
+        setAvgTransaction((lastestBlock.transactions?.length || 0))
+        for (let i = 0; i < 110; i++) {
+          const block = await web3.eth.getBlock(lastestBlock?.number - i)
           total += block.transactions.length
         }
         for (let i = 0; i < 10; i++) {
@@ -23,9 +24,9 @@ const TotalTransaction = () => {
           total += block.transactions.length
         }
         total += lastestBlock?.transactions?.length
-        avg = total / 21
+        avg = total / 121
       } else {
-        avg = (startBlock.transactions?.length || 0)
+        avg = (lastestBlock.transactions?.length || 0)
       }
       setAvgTransaction(avg)
     }

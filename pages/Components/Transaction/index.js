@@ -50,6 +50,10 @@ const Transaction = ({ hash = '', index }) => {
     return () => clearInterval(interval)
   }, [block])
 
+  if (!transaction?.from) {
+    console.log(transaction)
+  }
+
   return (
     <>
       <Col span={5} className='t-item-column'><Link href={`/tx/${hash}`}>{ellipsisAddress(hash, 4, 4)}</Link></Col>

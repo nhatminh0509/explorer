@@ -6,6 +6,9 @@
   .ant-input-affix-wrapper{
     width: 500px;
     background-color: transparent;
+    @media screen and (max-width: 768px) {
+      width: 230px;        
+    }
     .ant-input-prefix {
       background-color: transparent;
     }

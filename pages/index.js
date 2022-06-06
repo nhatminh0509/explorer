@@ -42,14 +42,14 @@ const Home = () => {
       <Search />
     </div>
     <Row gutter={50} className='ML25 MR25 MT25' style={{ width: '100%' }}>
-      <Col className='MT20' md={24} lg={12}>
+      <Col className='MT20' xs={24} md={24} lg={12}>
         <BlockContainer header={{
           left: () => 'Total transaction'
         }}>
           <TotalTransaction />
         </BlockContainer>
       </Col>
-      <Col className='MT20' md={24} lg={12}>
+      <Col className='MT20' xs={24} md={24} lg={12}>
         <BlockContainer header={{
           left: () => 'Total block'
         }}>

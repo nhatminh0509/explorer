@@ -23,9 +23,14 @@ const Transactions = () => {
   useEffect(() => {
     if (lastestBlock && lastestBlock.number && lastestBlock.transactions && (!currentBlock || lastestBlock.number > currentBlock.number)) {
       setCurrentBlock(lastestBlock)
-      setTransactions(state => {
-        const newState = uniq([...lastestBlock.transactions, ...state])
-        return newState
+      lastestBlock?.transactions?.map(item => {
+        setTransactions(state => {
+          const existed = state.findIndex(ele => ele?.toLowerCase() === item?.toLowerCase())
+          if (existed > -1) {
+            return state
+          }
+          return [item, ...state]
+        })
       })
     }
   }, [lastestBlock, currentBlock])
@@ -63,6 +68,9 @@ const Transactions = () => {
       } else {
         perPageCount.current += block.transactions.length
       }
+      const newData = block?.transactions?.map(hash => ({
+        
+      }))
       setTransactions(state => [...state, ...block.transactions])
       setPage(state => state + 1)
       if (perPageCount.current >= PER_PAGE) {

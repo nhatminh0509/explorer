@@ -22,9 +22,9 @@ export default class Web3Services {
   }
 
   static createWeb3ProviderHTTP () {
-    // let web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-test.w3w.app/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'))
-    // return web3
-    return this.createWeb3ProviderSocket()
+    let web3 = new Web3(new Web3.providers.HttpProvider('http://95.179.192.46:9650/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'))
+    return web3
+    // return this.createWeb3ProviderSocket()
   }
 
   static createWeb3ProviderSocket () {

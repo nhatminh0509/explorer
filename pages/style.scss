@@ -11,12 +11,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     .title-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 480px;
+      @media screen and (max-width: 768px) {
+       width: 100%;       
+      }
       .title-wrapper {
         width: 100%;
         display: flex;
