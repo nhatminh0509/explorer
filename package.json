@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
+    "@react-three/drei": "^9.12.0",
+    "@react-three/fiber": "^8.0.22",
     "@reduxjs/toolkit": "^1.8.2",
     "@walletconnect/client": "^1.7.8",
     "@walletconnect/qrcode-modal": "^1.7.8",
@@ -31,6 +33,7 @@
     "react-transition-group": "^4.4.2",
     "redux": "^4.2.0",
     "sass": "^1.52.1",
+    "three": "^0.141.0",
     "web3": "^1.7.3"
   },
   "devDependencies": {
