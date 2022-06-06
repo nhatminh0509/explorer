@@ -22,8 +22,9 @@ export default class Web3Services {
   }
 
   static createWeb3ProviderHTTP () {
-    let web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-test.w3w.app/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'))
-    return web3
+    // let web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-test.w3w.app/ext/bc/21Z7pN9Z6VfmMo8jjhDQYyYJS5MB7MftZSuKrmenhmwADCWWJH/rpc'))
+    // return web3
+    return this.createWeb3ProviderSocket()
   }
 
   static createWeb3ProviderSocket () {
@@ -342,9 +343,9 @@ export default class Web3Services {
       receipt.blockNumber === null ||
       receipt.blockNumber === undefined
     ) {
-      // let web3 = new Web3()
-      // web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA[parseInt(CHAIN_ID)].rpcUrls[randomNumber(0, CHAIN_DATA[parseInt(CHAIN_ID)].rpcUrls.length)]))
-      let web3 = this.createWeb3ProviderHTTP()
+      let web3 = new Web3()
+      web3.setProvider(new Web3.providers.HttpProvider(CHAIN_DATA[parseInt(CHAIN_ID)].rpcUrls[randomNumber(0, CHAIN_DATA[parseInt(CHAIN_ID)].rpcUrls.length)]))
+      // let web3 = this.createWeb3ProviderHTTP()
       web3.eth.getTransactionReceipt(hash, (err, result) => {
         if (!err) {
           setTimeout(() => {
