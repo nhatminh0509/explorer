@@ -30,7 +30,7 @@ export const CHAIN_DATA = {
       symbol: 'WPT',
       decimals: 18
     },
-    blockExplorerUrls: ['https://testnet.metheus.network']
+    blockExplorerUrls: ['https://explorer-nhatminh0509.vercel.app/']
   }
 }
 
